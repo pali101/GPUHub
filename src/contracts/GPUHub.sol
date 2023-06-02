@@ -16,4 +16,7 @@ contract GPUHub {
         bool isFulfilled;
     }
 
+    mapping(uint256 => GPUListing) public gpuListings;
+    mapping(uint256 => GPURequest) public gpuRequests;
+
 }
