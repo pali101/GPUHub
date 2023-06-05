@@ -42,7 +42,7 @@ contract GPUHub {
      * @param _capacity The capacity of the GPU.
      */
 
-    function createGPUListing(string memory _gpuModel, uint256 _capacity, true) external {
+    function createGPUListing(string memory _gpuModel, uint256 _capacity) external {
         require(_capacity > 0, "Capacity must be greater than 0");
         gpuListings[listingCount] = GPUListing(
             msg.sender,
