@@ -53,4 +53,23 @@ contract GPUHub {
         emit GPUListingCreated(listingCount, msg.sender, _gpuModel, _capacity);
         listingCount++;
     }
+
+    /**
+     * @dev Submit a GPU request.
+     * @param _gpuModel The GPU model.
+     * @param _duration The duration of GPU usage.
+     */
+
+    function submitGPURequest(string memory _gpuModel, uint256 _duration) external {
+        require(_duration > 0, "Duration must be greater than 0");
+        gpuRequests[requestCount] = GPURequest(
+            msg.sender,
+            _gpuModel,
+            _duration,
+            false
+        );
+        emit GPURequestCreated(requestCount, msg.sender, _gpuModel, _duration);
+        requestCount++;
+    }
+
 }
