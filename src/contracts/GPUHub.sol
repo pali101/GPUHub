@@ -72,4 +72,13 @@ contract GPUHub {
         requestCount++;
     }
 
+    /**
+     * @dev Get the details of a GPU listing.
+     * @param _listingId The ID of the GPU listing.
+     * @return The provider address, GPU model, capacity, and availability.
+     */
+     function getGPUListing(uint256 _listingId) external view returns (address, string memory, uint256, bool) {
+         GPUListing memory listing = gpuListings[_listingId];
+         return (listing.provider, listing.gpuModel, listing.capacity, listing.isAvailable);
+     }
 }
