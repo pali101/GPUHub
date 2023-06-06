@@ -81,4 +81,14 @@ contract GPUHub {
          GPUListing memory listing = gpuListings[_listingId];
          return (listing.provider, listing.gpuModel, listing.capacity, listing.isAvailable);
      }
+
+    /**
+     * @dev Get the details of a GPU request.
+     * @param _requestId The ID of the GPU request.
+     * @return The requester address, GPU model, duration, and fulfillment status.
+     */
+     function getGPURequest(uint256 _requestId) external view returns (address, string memory, uint256, bool) {
+        GPURequest memory request = gpuRequests[_requestId];
+        return (request.requester, request.gpuModel, request.duration, request.isFulfilled);
+     }
 }
