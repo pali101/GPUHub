@@ -6,13 +6,15 @@ contract GPUHub {
         address provider;
         string gpuModel;
         uint256 capacity;
+        uint256 price; // In wei per minute
         bool isAvailable;
     }
 
     struct GPURequest {
         address requester;
         string gpuModel;
-        uint256 duration;
+        uint256 duration; // In minutes
+        bool isAccepted;
         bool isFulfilled;
     }
 
@@ -26,7 +28,8 @@ contract GPUHub {
         uint256 listingId,
         address provider,
         string gpuModel,
-        uint256 capacity
+        uint256 capacity,
+        uint256 price 
     );
 
     event GPURequestCreated(
@@ -42,15 +45,16 @@ contract GPUHub {
      * @param _capacity The capacity of the GPU.
      */
 
-    function createGPUListing(string memory _gpuModel, uint256 _capacity) external {
+    function createGPUListing(string memory _gpuModel, uint256 _capacity, uint256 _price) external {
         require(_capacity > 0, "Capacity must be greater than 0");
         gpuListings[listingCount] = GPUListing(
             msg.sender,
             _gpuModel,
             _capacity,
+            _price,
             true
         );
-        emit GPUListingCreated(listingCount, msg.sender, _gpuModel, _capacity);
+        emit GPUListingCreated(listingCount, msg.sender, _gpuModel, _capacity, _price);
         listingCount++;
     }
 
@@ -66,6 +70,7 @@ contract GPUHub {
             msg.sender,
             _gpuModel,
             _duration,
+            false,
             false
         );
         emit GPURequestCreated(requestCount, msg.sender, _gpuModel, _duration);
@@ -77,9 +82,9 @@ contract GPUHub {
      * @param _listingId The ID of the GPU listing.
      * @return The provider address, GPU model, capacity, and availability.
      */
-     function getGPUListing(uint256 _listingId) external view returns (address, string memory, uint256, bool) {
+     function getGPUListing(uint256 _listingId) external view returns (address, string memory, uint256, uint256, bool) {
          GPUListing memory listing = gpuListings[_listingId];
-         return (listing.provider, listing.gpuModel, listing.capacity, listing.isAvailable);
+         return (listing.provider, listing.gpuModel, listing.capacity, listing.price, listing.isAvailable);
      }
 
     /**
@@ -87,8 +92,8 @@ contract GPUHub {
      * @param _requestId The ID of the GPU request.
      * @return The requester address, GPU model, duration, and fulfillment status.
      */
-     function getGPURequest(uint256 _requestId) external view returns (address, string memory, uint256, bool) {
+     function getGPURequest(uint256 _requestId) external view returns (address, string memory, uint256, bool, bool) {
         GPURequest memory request = gpuRequests[_requestId];
-        return (request.requester, request.gpuModel, request.duration, request.isFulfilled);
+        return (request.requester, request.gpuModel, request.duration, request.isAccepted,request.isFulfilled);
      }
 }
