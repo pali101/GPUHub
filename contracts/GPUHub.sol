@@ -22,7 +22,7 @@ contract GPUHub {
     // mapping(uint256 => GPURequest) public gpuRequests;
 
     uint256 public listingCount;
-    uint256 public requestCount;
+    // uint256 public requestCount;
 
     event GPUListingCreated(
         uint256 listingId,
