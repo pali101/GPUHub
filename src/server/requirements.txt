@@ -28,11 +28,13 @@ MarkupSafe==2.1.3
 multidict==6.0.4
 parsimonious==0.9.0
 protobuf==4.23.2
+py-solc-x==1.1.1
 pycryptodome==3.18.0
 pyrsistent==0.19.3
 regex==2023.6.3
 requests==2.31.0
 rlp==3.0.0
+semantic-version==2.10.0
 toolz==0.12.0
 urllib3==2.0.3
 web3==6.4.0
