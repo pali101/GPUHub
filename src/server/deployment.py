@@ -40,17 +40,19 @@ address = "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1"
 # Remove this private key after testing and for production
 private_key = "0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d"
 
-# create contract 
+# create contract
 contract_list = w3.eth.contract(abi=abi, bytecode=bytecode)
 nonce = w3.eth.getTransactionCount(address)
 
 # build txn
-txn = contract_list.constructor().buildTransaction({
-    "chainId": chain_id,
-    "gasPrice": w3.eth.gasPrice,
-    "from": address,
-    "nonce": nonce,
-}
+txn = contract_list.constructor().buildTransaction(
+    {
+        "chainId": chain_id,
+        "gasPrice": w3.eth.gasPrice,
+        "from": address,
+        "nonce": nonce,
+    }
+)
 
 # sign txn
 signed_txn = w3.eth.account.sign_transaction(txn, private_key=private_key)
