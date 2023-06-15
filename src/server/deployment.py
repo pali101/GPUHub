@@ -1,4 +1,4 @@
-from web3 import web3
+import web3
 from solcx import compile_standard, install_solc
 import json
 
@@ -21,7 +21,7 @@ compiled_sol = compile_standard(
     solc_version="0.8.0",
 )
 
-print(compiled_sol)
+# print(compiled_sol)
 
 with open("compiled_code.json", "w") as file:
     json.dump(compiled_sol, file, indent=4)
@@ -42,13 +42,13 @@ private_key = "0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1
 
 # create contract
 contract_list = w3.eth.contract(abi=abi, bytecode=bytecode)
-nonce = w3.eth.getTransactionCount(address)
+nonce = w3.eth.get_transaction_count(address)
 
 # build txn
-txn = contract_list.constructor().buildTransaction(
+txn = contract_list.constructor().build_transaction(
     {
         "chainId": chain_id,
-        "gasPrice": w3.eth.gasPrice,
+        "gasPrice": w3.eth.gas_price,
         "from": address,
         "nonce": nonce,
     }
