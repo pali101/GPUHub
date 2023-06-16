@@ -43,7 +43,7 @@ contract GPUHub {
      * @dev Create a new GPU listing.
      * @param _gpuModel The GPU model.
      * @param _capacity The capacity of the GPU in GB.
-     * @param _price The price of the GPU per minute.
+     * @param _price The price of the GPU in wei per minute.
      */
 
     function createGPUListing(
