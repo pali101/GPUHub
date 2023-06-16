@@ -62,3 +62,60 @@ txn_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
 print("Waiting for contract to be deployed...")
 txn_receipt = w3.eth.wait_for_transaction_receipt(txn_hash)
 print("Contract deployed to {0}".format(txn_receipt.contractAddress))
+
+contract_list = w3.eth.contract(address=txn_receipt.contractAddress, abi=abi)
+create_gpu_listing = contract_list.functions.createGPUListing(
+    "RTX-3080", 24, 100
+).build_transaction(
+    {
+        "chainId": chain_id,
+        "gasPrice": w3.eth.gas_price,
+        "from": address,
+        "nonce": nonce + 1,
+    }
+)
+nonce += 1
+# sign txn
+sign_create_gpu_listing = w3.eth.account.sign_transaction(
+    create_gpu_listing, private_key=private_key
+)
+
+# send txn
+send_create_gpu_listing = w3.eth.send_raw_transaction(
+    sign_create_gpu_listing.rawTransaction
+)
+txn_receipt = w3.eth.wait_for_transaction_receipt(send_create_gpu_listing)
+
+# get gpu listing by id
+# send id as a parameter from the frontend
+listing_id = 0
+get_gpu_listing = contract_list.functions.getGPUListing(0).call()
+print(get_gpu_listing)
+
+# create_gpu_listing = contract_list.functions.createGPUListing(
+#     "RTX-3090", 16, 50
+# ).build_transaction(
+#     {
+#         "chainId": chain_id,
+#         "gasPrice": w3.eth.gas_price,
+#         "from": address,
+#         "nonce": nonce + 1,
+#     }
+# )
+
+# # sign txn
+# sign_create_gpu_listing = w3.eth.account.sign_transaction(
+#     create_gpu_listing, private_key=private_key
+# )
+
+# # send txn
+# send_create_gpu_listing = w3.eth.send_raw_transaction(
+#     sign_create_gpu_listing.rawTransaction
+# )
+# txn_receipt = w3.eth.wait_for_transaction_receipt(send_create_gpu_listing)
+
+# # get gpu listing by id
+# # send id as a parameter from the frontend
+# listing_id = 1
+# get_gpu_listing = contract_list.functions.getGPUListing(1).call()
+# print(get_gpu_listing)
