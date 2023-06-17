@@ -29,7 +29,7 @@ contract GPUHub {
         address provider,
         string gpuModel,
         uint256 capacity,
-        uint256 price 
+        uint256 price
     );
 
     // event GPURequestCreated(
@@ -42,11 +42,15 @@ contract GPUHub {
     /**
      * @dev Create a new GPU listing.
      * @param _gpuModel The GPU model.
-     * @param _capacity The capacity of the GPU.
-     * @param _price The price of the GPU per minute.
+     * @param _capacity The capacity of the GPU in GB.
+     * @param _price The price of the GPU in wei per minute.
      */
 
-    function createGPUListing(string memory _gpuModel, uint256 _capacity, uint256 _price) external {
+    function createGPUListing(
+        string memory _gpuModel,
+        uint256 _capacity,
+        uint256 _price
+    ) external {
         require(_capacity > 0, "Capacity must be greater than 0");
         gpuListings[listingCount] = GPUListing(
             msg.sender,
@@ -55,7 +59,13 @@ contract GPUHub {
             _price,
             true
         );
-        emit GPUListingCreated(listingCount, msg.sender, _gpuModel, _capacity, _price);
+        emit GPUListingCreated(
+            listingCount,
+            msg.sender,
+            _gpuModel,
+            _capacity,
+            _price
+        );
         listingCount++;
     }
 
@@ -83,10 +93,18 @@ contract GPUHub {
      * @param _listingId The ID of the GPU listing.
      * @return The provider address, GPU model, capacity, and availability.
      */
-     function getGPUListing(uint256 _listingId) external view returns (address, string memory, uint256, uint256, bool) {
-         GPUListing memory listing = gpuListings[_listingId];
-         return (listing.provider, listing.gpuModel, listing.capacity, listing.price, listing.isAvailable);
-     }
+    function getGPUListing(
+        uint256 _listingId
+    ) external view returns (address, string memory, uint256, uint256, bool) {
+        GPUListing memory listing = gpuListings[_listingId];
+        return (
+            listing.provider,
+            listing.gpuModel,
+            listing.capacity,
+            listing.price,
+            listing.isAvailable
+        );
+    }
 
     // /**
     //  * @dev Get the details of a GPU request.
