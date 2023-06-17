@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 import web3
 from solcx import compile_standard, install_solc
 import json
@@ -43,23 +43,33 @@ def hello():
     return "Hello World!"
 
 
-@app.route("/AddGPU")
+@app.route("/addgpu", methods=["POST"])
 def AddGPU():
     # Call Smart Contract function - createGPUListing(string gpuModel, uint256 capacity, uint256 price) to add GPU to the marketplace list
+    gpu_model = request.json["gpuModel"]
+    capacity = request.json["capacity"]
+    price = request.json["price"]
+    tx_receipt = create_gpu_listing(gpuhub, nonce, gpu_model, capacity, price)
+    return "1"
 
-    return ""
 
-
-@app.route("/GetGPUDetailsFromListID")
-def GetGPUDetailsFromList(listingID):
+@app.route("/getgpudetailsbyid", methods=["POST"])
+def GetGPUDetailsFromList():
     # Call Smart Contract function - getGPUList(listingID) to get GPU info for a particular Listing ID in the marketplace
-    return ""
+    listing_id = request.json["listingID"]
+    gpu_listing = get_gpu_listing_by_id(gpuhub, listing_id)
+    return jsonify(gpu_listing)
 
 
-@app.route("/GetGPUList")
+@app.route("/getgpulist", methods=["POST"])
 def GetGPUList():
-    # Call Smart Contract function - getGPUList() iteratively to get all GPU info in the marketplace until listingCount is reached, if isAvailable is true then add to list
-    return ""
+    # gpu_list = []
+    # max_listings = request.json["maxListings"]
+    # # Call Smart Contract function - getGPUList() iteratively to get all GPU info in the marketplace until listingCount is reached, if isAvailable is true then add to list
+    # for i in range(0, max_listings):
+    #     gpu_listing = get_gpu_listing_by_id(gpuhub, i)
+    #     gpu_list.append(gpu_listing)
+    # return jsonify(gpu_list)
 
 
 if __name__ == "__main__":
