@@ -3,8 +3,8 @@ import { Navbar } from "./Navbar";
 
 const AddGPU = () => {
     const [gpuModel, setGpuModel] = useState("")
-    const [gpuCapacity, setGpuCapacity] = useState("")
-    const [pricePerMinute, setPricePerMinute] = useState("")
+    const [gpuCapacity, setGpuCapacity] = useState()
+    const [pricePerMinute, setPricePerMinute] = useState()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -22,8 +22,8 @@ const AddGPU = () => {
         }
         const data = {
             gpuModel,
-            "capacity":gpuCapacity,
-            "price":pricePerMinute
+            "capacity":parseInt(gpuCapacity),
+            "price":parseInt(pricePerMinute)
         }
         const response = await fetch("http://localhost:5000/addgpu", {
             method: "POST",
@@ -34,12 +34,12 @@ const AddGPU = () => {
         })
         const res = await response.json()
         console.log(res)
-        // if (res.status === "success") {
-        //     alert("GPU added successfully")
-        // }
-        // else {
-        //     alert("Error adding GPU")
-        // }
+        if (res.success) {
+            alert("GPU added successfully")
+        }
+        else {
+            alert("Error in adding GPU")
+        }
         
 
     }
