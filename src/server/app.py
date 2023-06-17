@@ -70,6 +70,7 @@ def GetGPUList():
     #     gpu_listing = get_gpu_listing_by_id(gpuhub, i)
     #     gpu_list.append(gpu_listing)
     # return jsonify(gpu_list)
+    return ""
 
 
 if __name__ == "__main__":
