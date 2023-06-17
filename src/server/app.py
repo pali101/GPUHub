@@ -54,10 +54,7 @@ def AddGPU():
     price = request.json["price"]
     tx_receipt = create_gpu_listing(gpuhub, nonce, gpu_model, capacity, price)
     # print(tx_receipt)
-    response = {
-        "success": True,
-        "message": "GPU listing added successfully"
-    }
+    response = {"success": True, "message": "GPU listing added successfully"}
     return jsonify(response)
 
 
@@ -71,14 +68,13 @@ def GetGPUDetailsFromList():
 
 @app.route("/getgpulist", methods=["POST"])
 def GetGPUList():
-    # gpu_list = []
-    # max_listings = request.json["maxListings"]
-    # # Call Smart Contract function - getGPUList() iteratively to get all GPU info in the marketplace until listingCount is reached, if isAvailable is true then add to list
-    # for i in range(0, max_listings):
-    #     gpu_listing = get_gpu_listing_by_id(gpuhub, i)
-    #     gpu_list.append(gpu_listing)
-    # return jsonify(gpu_list)
-    return ""
+    gpu_list = []
+    max_listings = request.json["maxListings"]
+    # Call Smart Contract function - getGPUList() iteratively to get all GPU info in the marketplace until listingCount is reached, if isAvailable is true then add to list
+    for i in range(0, max_listings):
+        gpu_listing = get_gpu_listing_by_id(gpuhub, i)
+        gpu_list.append(gpu_listing)
+    return gpu_list
 
 
 if __name__ == "__main__":
