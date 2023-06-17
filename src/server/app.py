@@ -69,12 +69,14 @@ def GetGPUDetailsFromList():
 @app.route("/getgpulist", methods=["POST"])
 def GetGPUList():
     gpu_list = []
-    max_listings = 100
+    max_listings = 100  # Later fetch this from the contract
     max_price = request.json["maxPrice"]
     min_capacity = request.json["minCapacity"]
     # Call Smart Contract function - getGPUList() iteratively to get all GPU info in the marketplace until listingCount is reached, if isAvailable is true then add to list
     for i in range(0, max_listings):
         gpu_listing = get_gpu_listing_by_id(gpuhub, i)
+        if gpu_listing[1] == "":
+            break
         if gpu_listing[3] <= max_price and gpu_listing[2] >= min_capacity:
             gpu_listing.append(i)
             gpu_list.append(gpu_listing)
