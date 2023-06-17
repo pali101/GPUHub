@@ -21,7 +21,8 @@ GPUHub is a decentralized GPU resource sharing platform built on the Ethereum bl
 ### Installation
 
 1. Clone the repository: `git clone https://github.com/pali101/GPUHub.git`
-2. Install dependencies: `pip install -r src/server/requirements.txt`
+2. sudo `npm install ganache --global`
+3. Install dependencies: `pip install -r src/server/requirements.txt`
 ### Usage
 
 1. Start a local development blockchain: `ganache`
