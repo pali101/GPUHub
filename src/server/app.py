@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify
 import web3
 from solcx import compile_standard, install_solc
 import json
+from flask_cors import CORS
+
 
 nonce = 0
 
@@ -36,6 +38,7 @@ def get_gpu_listing_by_id(contract, listing_id):
 
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/")
@@ -50,7 +53,12 @@ def AddGPU():
     capacity = request.json["capacity"]
     price = request.json["price"]
     tx_receipt = create_gpu_listing(gpuhub, nonce, gpu_model, capacity, price)
-    return "1"
+    # print(tx_receipt)
+    response = {
+        "success": True,
+        "message": "GPU listing added successfully"
+    }
+    return jsonify(response)
 
 
 @app.route("/getgpudetailsbyid", methods=["POST"])
@@ -146,4 +154,4 @@ if __name__ == "__main__":
     create_gpu_listing(gpuhub, nonce, "RTX-3080", 1024, 1500)
     print(get_gpu_listing_by_id(gpuhub, 1))
     print(gpuhub.functions.getGPUListing(2).call())
-    app.run()
+    app.run(debug=True)
