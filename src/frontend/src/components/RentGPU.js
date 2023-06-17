@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navbar } from "./Navbar";
 
 const RentGPU = () => {
+    const [gpuModel, setGpuModel] = useState("")
+    const [gpuCapacity, setGpuCapacity] = useState("")
+    const [pricePerMinute, setPricePerMinute] = useState("")
+    const [duration, setDuration] = useState("")
+
   return (
     <div>
       <Navbar />
@@ -55,7 +60,7 @@ const RentGPU = () => {
             />
           </div>
 
-          <div class="flex items-center justify-end">
+          <div class="flex items-center justify-center">
             <button
               class="m-4  bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="button"
