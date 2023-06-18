@@ -115,4 +115,75 @@ contract GPUHub {
     //     GPURequest memory request = gpuRequests[_requestId];
     //     return (request.requester, request.gpuModel, request.duration, request.isAccepted,request.isFulfilled);
     //  }
+
+    /**
+     * @dev Fulfill a GPU request by marking the GPU as unavailable and transferring the payment to the provider.
+     * @param _listingId The ID of the GPU listing to fulfill.
+     */
+    function fulfillGPURequest(uint256 _listingId) external {
+        GPUListing memory listing = gpuListings[_listingId];
+        // Verify that the GPU is available and the payment is sufficient
+        require(listing.isAvailable, "GPU is not available");
+        // require(msg.value >= listing.price, "Insufficient funds");
+        // Mark the GPU as unavailable
+        listing.isAvailable = false;
+        gpuListings[_listingId] = listing;
+        // integrate payment later and make function payable
+        // // Transfer the payment to the provider
+        // payable(listing.provider).transfer(msg.value);
+    }
+
+    function fulfilledGPURequest(uint256 _listingId) external {
+        GPUListing memory listing = gpuListings[_listingId];
+        require(!listing.isAvailable, "GPU is already available");
+        listing.isAvailable = true;
+        gpuListings[_listingId] = listing;
+    }
+
+    function getListingCount() external view returns (uint256) {
+        return listingCount;
+    }
+
+    // /**
+    //  * @dev Cancel a GPU listing by marking the GPU as available.
+    //  * @param _listingId The ID of the GPU listing to cancel.
+    //  */
+    // function cancelGPUListing(uint256 _listingId) external {
+    //     GPUListing memory listing = gpuListings[_listingId];
+    //     // Verify that the sender is the provider
+    //     require(
+    //         msg.sender == listing.provider,
+    //         "Only the provider can cancel a listing"
+    //     );
+    //     // Mark the GPU as available
+    //     listing.isAvailable = true;
+    //     gpuListings[_listingId] = listing;
+    // }
+
+    /**
+     * @dev Update a GPU listing.
+     * @param _listingId The ID of the GPU listing to update.
+     * @param _gpuModel The GPU model.
+     * @param _capacity The capacity of the GPU in GB.
+     * @param _price The price of the GPU in wei per minute.
+     */
+
+    function updateGPUListing(
+        uint256 _listingId,
+        string memory _gpuModel,
+        uint256 _capacity,
+        uint256 _price
+    ) external {
+        GPUListing memory listing = gpuListings[_listingId];
+        // Verify that the sender is the provider
+        require(
+            msg.sender == listing.provider,
+            "Only the provider can update a listing"
+        );
+        // Update the GPU listing
+        listing.gpuModel = _gpuModel;
+        listing.capacity = _capacity;
+        listing.price = _price;
+        gpuListings[_listingId] = listing;
+    }
 }
