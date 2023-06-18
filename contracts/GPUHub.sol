@@ -85,7 +85,7 @@ contract GPUHub {
     //         false
     //     );
     //     emit GPURequestCreated(requestCount, msg.sender, _gpuModel, _duration);
-    //     requestCount++;
+    //     requestCounmodificationst++;
     // }
 
     /**
