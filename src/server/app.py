@@ -136,6 +136,28 @@ def GetGPUDetailsFromList():
     return jsonify(gpu_listing)
 
 
+@app.route("/fulfillrequest", methods=["POST"])
+def FulfilRequest():
+    listing_id = request.json["listingID"]
+    tx_receipt = fulfill_gpu_listing(gpuhub, nonce, listing_id)
+    response = {
+        "success": True,
+        "message": "GPU listing fulfil successfully - isAvailable set to false",
+    }
+    return jsonify(response)
+
+
+@app.route("/fulfilledrequest", methods=["POST"])
+def FulfilledRequest():
+    listing_id = request.json["listingID"]
+    tx_receipt = fulfilled_gpu_listing(gpuhub, nonce, listing_id)
+    response = {
+        "success": True,
+        "message": "GPU listing fulfilled successfully - isAvailable set to true",
+    }
+    return jsonify(response)
+
+
 @app.route("/getgpulist", methods=["POST"])
 def GetGPUList():
     gpu_list = []
