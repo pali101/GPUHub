@@ -115,4 +115,20 @@ contract GPUHub {
     //     GPURequest memory request = gpuRequests[_requestId];
     //     return (request.requester, request.gpuModel, request.duration, request.isAccepted,request.isFulfilled);
     //  }
+
+    /**
+     * @dev Fulfill a GPU request by marking the GPU as unavailable and transferring the payment to the provider.
+     * @param _listingId The ID of the GPU listing to fulfill.
+     */
+    function fulfillGPURequest(uint256 _listingId) external payable {
+        GPUListing memory listing = gpuListings[_listingId];
+        // Verify that the GPU is available and the payment is sufficient
+        require(listing.isAvailable, "GPU is not available");
+        require(msg.value >= listing.price, "Insufficient funds");
+        // Mark the GPU as unavailable
+        listing.isAvailable = false;
+        gpuListings[_listingId] = listing;
+        // Transfer the payment to the provider
+        payable(listing.provider).transfer(msg.value);
+    }
 }
