@@ -52,6 +52,32 @@ def update_gpu_listing(
     return tx_receipt
 
 
+def fulfill_gpu_listing(contract_instance, prev_nonce, listing_id):
+    global nonce
+    nonce = prev_nonce
+    gpuhub = contract_instance
+    tx = gpuhub.functions.fulfillGPUListing(listing_id).build_transaction(
+        {
+            "chainId": chain_id,
+            "gasPrice": w3.eth.gas_price + 100000,
+            "from": address,
+            "nonce": nonce + 1,
+        }
+    )
+    tx_create = w3.eth.account.sign_transaction(tx, private_key=private_key)
+    tx_hash = w3.eth.send_raw_transaction(tx_create.rawTransaction)
+    tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+    nonce += 1
+    return tx_receipt
+
+
+# Get listing count
+def get_listing_count(contract_instance):
+    gpuhub = contract_instance
+    get_listing_count = gpuhub.functions.getListingCount().call()
+    return get_listing_count
+
+
 # Get GPU listing by ID
 def get_gpu_listing_by_id(contract, listing_id):
     gpuhub = contract
