@@ -127,3 +127,12 @@ Implement a payment mechanism to handle the transfer of funds between the reques
 6. **Analytics and Reporting**: Integrate analytics and reporting features into the user interface. Provide users with insights and statistics on their GPU usage, earnings, and performance. This information can help users make informed decisions and optimize their GPU rental experience.
 
 Contributions from the community are highly appreciated. If you have any ideas, bug fixes, or improvements, please feel free to open issues and submit pull requests.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+The MIT License is a permissive open-source license that allows you to use, modify, and distribute the code, both commercially and non-commercially. It provides a balance between granting users the freedom to use the software and protecting the developers' rights.
+
+For more information, please see the [LICENSE](LICENSE) file.
+
