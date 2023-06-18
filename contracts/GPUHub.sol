@@ -120,7 +120,7 @@ contract GPUHub {
      * @dev Fulfill a GPU request by marking the GPU as unavailable and transferring the payment to the provider.
      * @param _listingId The ID of the GPU listing to fulfill.
      */
-    function fulfillGPURequest(uint256 _listingId) external payable {
+    function fulfillGPURequest(uint256 _listingId) external {
         GPUListing memory listing = gpuListings[_listingId];
         // Verify that the GPU is available and the payment is sufficient
         require(listing.isAvailable, "GPU is not available");
@@ -128,8 +128,9 @@ contract GPUHub {
         // Mark the GPU as unavailable
         listing.isAvailable = false;
         gpuListings[_listingId] = listing;
-        // Transfer the payment to the provider
-        payable(listing.provider).transfer(msg.value);
+        // integrate payment later and make function payable
+        // // Transfer the payment to the provider
+        // payable(listing.provider).transfer(msg.value);
     }
 
     // /**
