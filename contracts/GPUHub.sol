@@ -133,6 +133,13 @@ contract GPUHub {
         // payable(listing.provider).transfer(msg.value);
     }
 
+    function fulfilledGPURequest(uint256 _listingId) external {
+        GPUListing memory listing = gpuListings[_listingId];
+        require(!listing.isAvailable, "GPU is already available");
+        listing.isAvailable = true;
+        gpuListings[_listingId] = listing;
+    }
+
     function getListingCount() external view returns (uint256) {
         return listingCount;
     }
