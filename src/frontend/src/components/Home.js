@@ -23,7 +23,7 @@ const Home = () => {
         .then((result) => {
           accountChangedHandler(result[0]);
           getAccountBalance(result[0]);
-          alert("Wallet Connected Succqessfully");
+          alert("Wallet Connected Successfully");
           Navigate("/dashboard");
         })
         .catch((error) => {
@@ -83,7 +83,7 @@ const Home = () => {
           Powering Collaboration, Unleashing Potential
         </h3>
         <p className="w-1/2 mt-10 m-auto">
-        Empowering GPU Computing. Share, Collaborate, Innovate. Harness the Power of GPUs, Accelerate Workflows. Revolutionize Resource Sharing, Drive Breakthroughs. Unleash the Potential of GPU Technology for Limitless Possibilities.
+          Empowering GPU Computing. Share, Collaborate, Innovate. Harness the Power of GPUs, Accelerate Workflows. Revolutionize Resource Sharing, Drive Breakthroughs. Unleash the Potential of GPU Technology for Limitless Possibilities.
         </p>
         <button class="m-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={connectWalletHandler}>
           Connect with Metamask{" "}
