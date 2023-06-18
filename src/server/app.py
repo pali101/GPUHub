@@ -169,7 +169,11 @@ def GetGPUList():
         gpu_listing = get_gpu_listing_by_id(gpuhub, i)
         if gpu_listing[1] == "":
             break
-        if gpu_listing[4] and gpu_listing[3] <= max_price and gpu_listing[2] >= min_capacity:
+        if (
+            gpu_listing[4]
+            and gpu_listing[3] <= max_price
+            and gpu_listing[2] >= min_capacity
+        ):
             gpu_listing.append(i)
             gpu_list.append(gpu_listing)
     return gpu_list
@@ -244,8 +248,16 @@ if __name__ == "__main__":
     tx_hash = w3.eth.send_raw_transaction(tx_create.rawTransaction)
     tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
     # print(gpuhub.functions.getGPUListing(0).call())
-    tx_receipt = create_gpu_listing(gpuhub, nonce, "RTX-3090", 128, 500)
-    create_gpu_listing(gpuhub, nonce, "RTX-3080", 1024, 1500)
+    tx_receipt = create_gpu_listing(gpuhub, nonce, "RTX-2080", 128, 3750)
+    create_gpu_listing(gpuhub, nonce, "RTX-3080", 256, 7500)
+    create_gpu_listing(gpuhub, nonce, "RTX-3090", 128, 5000)
+    create_gpu_listing(gpuhub, nonce, "GTX 1660", 4, 1200)
+    create_gpu_listing(gpuhub, nonce, "RX 580", 8, 750)
+    create_gpu_listing(gpuhub, nonce, "RX 5700 XT", 12, 1250)
+    create_gpu_listing(gpuhub, nonce, "GTX 1660 Ti", 16, 1500)
+    create_gpu_listing(gpuhub, nonce, "RTX-2080", 24, 2500)
+    create_gpu_listing(gpuhub, nonce, "RTX-480", 16, 1250)
+    create_gpu_listing(gpuhub, nonce, "RTX-3090", 128, 7500)
     # print(get_gpu_listing_by_id(gpuhub, 1))
     # print(gpuhub.functions.getGPUListing(2).call())
     app.run(debug=True)
