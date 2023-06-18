@@ -53,11 +53,11 @@ def update_gpu_listing(
 
 
 # Fulfill GPU listing - mark GPU as unavailable - currently in use
-def fulfill_gpu_listing(contract_instance, prev_nonce, listing_id):
+def fulfill_gpu_request(contract_instance, prev_nonce, listing_id):
     global nonce
     nonce = prev_nonce
     gpuhub = contract_instance
-    tx = gpuhub.functions.fulfillGPUListing(listing_id).build_transaction(
+    tx = gpuhub.functions.fulfillGPURequest(listing_id).build_transaction(
         {
             "chainId": chain_id,
             "gasPrice": w3.eth.gas_price + 100000,
@@ -77,7 +77,7 @@ def fulfilled_gpu_listing(contract_instance, prev_nonce, listing_id):
     global nonce
     nonce = prev_nonce
     gpuhub = contract_instance
-    tx = gpuhub.functions.fulfilledGPUListing(listing_id).build_transaction(
+    tx = gpuhub.functions.fulfilledGPURequest(listing_id).build_transaction(
         {
             "chainId": chain_id,
             "gasPrice": w3.eth.gas_price + 100000,
@@ -139,7 +139,7 @@ def GetGPUDetailsFromList():
 @app.route("/fulfillrequest", methods=["POST"])
 def FulfilRequest():
     listing_id = request.json["listingID"]
-    tx_receipt = fulfill_gpu_listing(gpuhub, nonce, listing_id)
+    tx_receipt = fulfill_gpu_request(gpuhub, nonce, listing_id)
     response = {
         "success": True,
         "message": "GPU listing fulfil successfully - isAvailable set to false",
@@ -177,6 +177,12 @@ def GetGPUList():
             gpu_listing.append(i)
             gpu_list.append(gpu_listing)
     return gpu_list
+
+
+@app.route("/getlistingcount", methods=["GET"])
+def GetListingCount():
+    listing_count = get_listing_count(gpuhub)
+    return jsonify(listing_count)
 
 
 if __name__ == "__main__":
