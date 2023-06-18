@@ -124,7 +124,7 @@ contract GPUHub {
         GPUListing memory listing = gpuListings[_listingId];
         // Verify that the GPU is available and the payment is sufficient
         require(listing.isAvailable, "GPU is not available");
-        require(msg.value >= listing.price, "Insufficient funds");
+        // require(msg.value >= listing.price, "Insufficient funds");
         // Mark the GPU as unavailable
         listing.isAvailable = false;
         gpuListings[_listingId] = listing;
