@@ -147,7 +147,7 @@ def GetGPUList():
         gpu_listing = get_gpu_listing_by_id(gpuhub, i)
         if gpu_listing[1] == "":
             break
-        if gpu_listing[3] <= max_price and gpu_listing[2] >= min_capacity:
+        if gpu_listing[4] and gpu_listing[3] <= max_price and gpu_listing[2] >= min_capacity:
             gpu_listing.append(i)
             gpu_list.append(gpu_listing)
     return gpu_list
