@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navbar } from "./Navbar";
 
 const RentGPU = () => {
@@ -6,11 +6,33 @@ const RentGPU = () => {
   const [maxPricePerMinute, setMaxPricePerMinute] = useState();
   // const [duration, setDuration] = useState();
   const [gpuList, setGpuList] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  const initialFetch = async () => {
+    const data = {
+      minCapacity: parseInt(0),
+      maxPrice: parseInt(10000000),
+      // duration: parseInt(duration),
+    };
+    const response = await fetch("http://localhost:5000/getgpulist", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const res = await response.json();
+    // console.log(res);
+    setGpuList(res)
+  };
+  useEffect(() => {
+    initialFetch();
+    setLoading(false);
+  }, []);
   const handleRentGPU = async (gpuId) => {
     const data = {
-      "listingID": parseInt(gpuId)
-    }
+      listingID: parseInt(gpuId),
+    };
     const response = await fetch("http://localhost:5000/fulfillrequest", {
       method: "POST",
       headers: {
@@ -20,7 +42,11 @@ const RentGPU = () => {
     });
     const res = await response.json();
     console.log(res);
-  }
+    if( res.success === true){
+      alert("GPU Rented Successfully");
+      window.location.reload();
+    }
+  };
   const handleRequestGPU = async () => {
     if (!gpuCapacity || !maxPricePerMinute) {
       alert("Please fill all the fields");
@@ -53,8 +79,10 @@ const RentGPU = () => {
       <div className="flex ml-64 justify-between">
         {" "}
         {/* outer block */}
-        <div className="flex flex-col ml-5">
-          <h2 className="text-2xl font-extrabold mt-10 text-left ml-5">Available GPUs </h2>
+        <div className="flex flex-col ml-5 w-2/3">
+          <h2 className="text-2xl font-extrabold mt-10 text-left ml-5">
+            Available GPUs{" "}
+          </h2>
           <div>
             {gpuList.length > 0 ? (
               <div className="flex flex-wrap">
@@ -112,11 +140,14 @@ const RentGPU = () => {
                 ))}
               </div>
             ) : (
-              <div>No GPUs available</div>
+              <>
+                <div>No GPUs available</div>
+                {loading && <div>Loading...</div>}
+              </>
             )}
           </div>
         </div>
-        <div className="w-1/4 flex flex-col border-l-2 mt-7">
+        <div className="flex flex-col border-l-2 mt-7">
           <div class="m-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
