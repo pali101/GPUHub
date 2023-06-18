@@ -131,4 +131,47 @@ contract GPUHub {
         // Transfer the payment to the provider
         payable(listing.provider).transfer(msg.value);
     }
+
+    // /**
+    //  * @dev Cancel a GPU listing by marking the GPU as available.
+    //  * @param _listingId The ID of the GPU listing to cancel.
+    //  */
+    // function cancelGPUListing(uint256 _listingId) external {
+    //     GPUListing memory listing = gpuListings[_listingId];
+    //     // Verify that the sender is the provider
+    //     require(
+    //         msg.sender == listing.provider,
+    //         "Only the provider can cancel a listing"
+    //     );
+    //     // Mark the GPU as available
+    //     listing.isAvailable = true;
+    //     gpuListings[_listingId] = listing;
+    // }
+
+    /**
+     * @dev Update a GPU listing.
+     * @param _listingId The ID of the GPU listing to update.
+     * @param _gpuModel The GPU model.
+     * @param _capacity The capacity of the GPU in GB.
+     * @param _price The price of the GPU in wei per minute.
+     */
+
+    function updateGPUListing(
+        uint256 _listingId,
+        string memory _gpuModel,
+        uint256 _capacity,
+        uint256 _price
+    ) external {
+        GPUListing memory listing = gpuListings[_listingId];
+        // Verify that the sender is the provider
+        require(
+            msg.sender == listing.provider,
+            "Only the provider can update a listing"
+        );
+        // Update the GPU listing
+        listing.gpuModel = _gpuModel;
+        listing.capacity = _capacity;
+        listing.price = _price;
+        gpuListings[_listingId] = listing;
+    }
 }
