@@ -2,6 +2,8 @@
 
 GPUHub is a decentralized GPU resource sharing platform built on the Ethereum blockchain. It allows users to share their GPU resources and enables others to request and utilize those resources for their computational needs.
 
+Goerli contract address - `0x12b63ac4B1D371Cd464cC6f9cB45b15aF2CfA09c`
+
 ## Features
 
 - Share GPU Resources: GPU owners can create listings and offer their spare GPU resources for others to use.
@@ -101,11 +103,8 @@ GPUHub is a decentralized GPU resource sharing platform built on the Ethereum bl
 - **Request Body**:
     ```json
     {
-        "maxPrice": "integer",
-        "minCapacity": "integer"
-    }
-    ```
-- **Response**: List of available filtered GPU listings.
+￼
+fulfilledGPURequest
 
 ## Future Work
 
