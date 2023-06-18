@@ -133,6 +133,10 @@ contract GPUHub {
         // payable(listing.provider).transfer(msg.value);
     }
 
+    function getListingCount() external view returns (uint256) {
+        return listingCount;
+    }
+
     // /**
     //  * @dev Cancel a GPU listing by marking the GPU as available.
     //  * @param _listingId The ID of the GPU listing to cancel.
