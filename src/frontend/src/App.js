@@ -4,8 +4,13 @@ import Dashboard from "./components/Dashboard";
 import Home from "./components/Home";
 import AddGPU from "./components/AddGPU";
 import RentGPU from "./components/RentGPU";
+import MetaMask from "./MetaMask";
+import { useState } from "react";
+import { ethers } from "ethers";
+
 
 function App() {
+  
   return (
     <div className="App">
       <BrowserRouter>
@@ -14,7 +19,7 @@ function App() {
           <Route path="/addgpu" Component={AddGPU} />
           <Route path="/rentgpu" Component={RentGPU} />
 
-          <Route path="/" Component={Home} />
+          <Route path="/" Component={Home } />
         </Routes>
       </BrowserRouter>
     </div>

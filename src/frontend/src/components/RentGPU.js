@@ -7,6 +7,20 @@ const RentGPU = () => {
   // const [duration, setDuration] = useState();
   const [gpuList, setGpuList] = useState([]);
 
+  const handleRentGPU = async (gpuId) => {
+    const data = {
+      "listingID": parseInt(gpuId)
+    }
+    const response = await fetch("http://localhost:5000/fulfillrequest", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const res = await response.json();
+    console.log(res);
+  }
   const handleRequestGPU = async () => {
     if (!gpuCapacity || !maxPricePerMinute) {
       alert("Please fill all the fields");
@@ -89,7 +103,7 @@ const RentGPU = () => {
                       <button
                         class="m-4  bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="button"
-                        onClick={handleRequestGPU}
+                        onClick={() => handleRentGPU(gpu[5])}
                       >
                         Rent GPU
                       </button>
